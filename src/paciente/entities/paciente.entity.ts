@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Usuario } from 'src/usuario/entities/usuario.entity'
 
 @Entity()
-export class Medico extends Usuario {
+export class Paciente extends Usuario {
   @Column({ length: 100 })
   @ApiProperty({
     description: 'Especialidade do médico',
@@ -18,5 +18,5 @@ export class Medico extends Usuario {
   })
   email: string;
 
-  // Adicione outros campos e relacionamentos específicos do Médico
+  // Adicione outros campos e relacionamentos específicos do Paciente
 }
