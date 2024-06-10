@@ -6,12 +6,13 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 import { databaseProviders } from './database/database.providers';
 import { Usuario } from './usuario/entities/usuario.entity';
+import { MedicoModule } from './medico/medico.module';
 
 
 
 
 @Module({
-  imports: [UsuarioModule, AuthModule],
+  imports: [UsuarioModule, AuthModule, MedicoModule],
   controllers: [AppController],
   providers: [...databaseProviders,AppService,Usuario,JwtService],
   exports: [...databaseProviders],
