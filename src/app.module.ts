@@ -8,12 +8,13 @@ import { databaseProviders } from './database/database.providers';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { MedicoModule } from './medico/medico.module';
 import { PacienteModule } from './paciente/paciente.module';
+import { ConsultaModule } from './consulta/consulta.module';
 
 
 
 
 @Module({
-  imports: [UsuarioModule, AuthModule, MedicoModule, PacienteModule],
+  imports: [UsuarioModule, AuthModule, MedicoModule, PacienteModule, ConsultaModule],
   controllers: [AppController],
   providers: [...databaseProviders,AppService,Usuario,JwtService],
   exports: [...databaseProviders],

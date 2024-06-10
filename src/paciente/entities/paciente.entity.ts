@@ -1,6 +1,7 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Usuario } from 'src/usuario/entities/usuario.entity'
+import { Consulta } from 'src/consulta/entities/consulta.entity';
 
 @Entity()
 export class Paciente extends Usuario {
@@ -17,6 +18,11 @@ export class Paciente extends Usuario {
     example: '0000000-00',
   })
   email: string;
+
+  @OneToMany(() => Consulta, (consulta) => consulta.paciente)
+  consultas: Consulta[];
+
+
 
   // Adicione outros campos e relacionamentos específicos do Paciente
 }

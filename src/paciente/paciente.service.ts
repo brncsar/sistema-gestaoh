@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 export class PacienteService {
 
   constructor(
-    @Inject('MEDICO_REPOSITORY')
+    @Inject('PACIENTE_REPOSITORY')
     private pacienteRepository: Repository<Paciente>,
   ) {}
 
