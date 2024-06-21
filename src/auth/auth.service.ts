@@ -15,12 +15,13 @@ export class AuthService {
 
   async login(loginDto: LoginDTO) {
     const { usuario, senha } = loginDto;
-    const user = await this.usuarioService.findByEmail(usuario);
-
+    const user = await this.usuarioService.findByUsuario(usuario);
+    console.log(user)
     if (user && await user.validatePassword(user, senha)) {
       const payload = { usuario: user.usuario, sub: user.id };
       return this.jwtService.sign(payload);
     }
+    console.log("-----------")
     throw new UnauthorizedException('Credenciais Inválidas');
   }
   

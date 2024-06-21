@@ -9,7 +9,7 @@ export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
   @Post('create')
-  create(@Body() createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
+  create(@Body() createUsuarioDto: CreateUsuarioDto){
     console.log('Dados recebidos no controlador:', createUsuarioDto); // Log para verificar os dados recebidos
     return this.usuarioService.create(createUsuarioDto);
   }

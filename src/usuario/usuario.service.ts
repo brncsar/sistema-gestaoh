@@ -1,53 +1,88 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
-import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
-import { Repository, getRepository } from 'typeorm';
-import { LoginDTO } from './dto/login-usuario.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Medico } from '../medico/entities/medico.entity';
+import { Paciente } from '../paciente/entities/paciente.entity';
 import * as bcrypt from 'bcrypt';
+import { CreatePacienteDto } from 'src/paciente/dto/create-paciente.dto';
+import { CreateMedicoDto } from 'src/medico/dto/create-medico.dto';
+import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
 @Injectable()
 export class UsuarioService {
-  
   constructor(
-    @Inject('USUARIO_REPOSITORY')
+    @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
+    @InjectRepository(Medico)
+    private medicoRepository: Repository<Medico>,
+    @InjectRepository(Paciente)
+    private pacienteRepository: Repository<Paciente>,
   ) {}
 
-  
-  
-  async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
-    //Hashing da senha antes de criar o usuário
+  async create(createUsuarioDto: CreateUsuarioDto){
+    const { tipo, senha, ...usuarioData } = createUsuarioDto;
+
+    // Hashing da senha antes de criar o usuário
     const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(createUsuarioDto.senha, salt);
+    const hashedPassword = await bcrypt.hash(senha, salt);
 
-    console.log('Dados recebidos: ', createUsuarioDto); // Log para verificar os dados recebidos
-    const newUser = this.usuarioRepository.create({
-      ...createUsuarioDto, senha: hashedPassword,
-    })
-    console.log('Dados a serem salvos:', newUser); // Log para verificar os dados antes de salvar
-    return await this.usuarioRepository.save(newUser);
+   
+    const novoUsuario = this.usuarioRepository.create({
+      ...usuarioData,
+      senha: hashedPassword
+    });
+    await this.usuarioRepository.save(novoUsuario);
+
+    if (tipo === 'medico') {
+      const medicoData = createUsuarioDto as CreateMedicoDto;
+      
+
+      const medico = this.medicoRepository.create({ 
+        especialidade: medicoData.especialidade,
+        crm: medicoData.crm
+      });
+
+
+      await this.medicoRepository.save(medico);
+      
+
+    } else if (tipo === 'paciente') {
+      const pacienteData = createUsuarioDto as CreatePacienteDto;
+      const paciente = this.pacienteRepository.create({    
+        contato: pacienteData.contato, 
+      });
+
+
+      await this.pacienteRepository.save(paciente);
+      
+      
+    } else {
+      throw new Error('Tipo de usuário inválido');
+    }
+
+    return {statusCode: HttpStatus.OK, message: 'Arvores encontradas.'};
   }
 
-  findAll() {
-    return `This action returns all usuario`;
+  async findAll(): Promise<Usuario[]> {
+    return this.usuarioRepository.find();
   }
 
-  async findByEmail(usuario: string): Promise<Usuario | null> {
-    return await this.usuarioRepository.findOne({ where: { usuario } });
+  async findOne(id: number): Promise<Usuario> {
+    return this.usuarioRepository.findOne({ where: { id } });
   }
 
-
-  findOne(id: number) {
-    return `This action returns a #${id} usuario`;
+  async findByUsuario(usuario: string): Promise<Usuario> {
+    return this.usuarioRepository.findOne({ where: { usuario } });
   }
 
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
+  async update(id: number, updateUsuarioDto: UpdateUsuarioDto): Promise<Usuario> {
+    await this.usuarioRepository.update(id, updateUsuarioDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} usuario`;
+  async remove(id: number): Promise<void> {
+    await this.usuarioRepository.delete(id);
   }
-
 }

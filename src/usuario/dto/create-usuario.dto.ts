@@ -9,6 +9,9 @@ export class CreateUsuarioDto {
 
   @ApiProperty({ example: 'password123' })
   senha: string;
+
+  @ApiProperty({ example: 'tipo de usuário' })
+  tipo: string;
   
   @ApiProperty({ example: '2023-12-08T12:00:00Z', required: false })
   data_criacao?: Date;

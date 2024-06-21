@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
+import { Medico } from 'src/medico/entities/medico.entity';
+import { Paciente } from 'src/paciente/entities/paciente.entity';
 
 
 @Entity()
@@ -39,13 +41,21 @@ export class Usuario {
     example: '2023-12-08T12:00:00Z',
   })
   data_criacao: Date;
-    // hash: string;
-    // adm: boolean;
-    // data: Date;
+
+  @OneToOne(() => Medico, (medico) => medico.idusuario)
+  medico: Medico;
+
+
+  @OneToOne(() => Paciente, (paciente) => paciente.idusuario)
+  paciente: Paciente;
+
+    
 
 
     async validatePassword(user: Usuario, senha: string): Promise<boolean> {
       return bcrypt.compare(senha, user.senha);
     }
+
+    
 
 }

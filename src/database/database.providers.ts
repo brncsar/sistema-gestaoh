@@ -17,6 +17,7 @@ export const databaseProviders = [
         database: 'gestaosaudedb',
         entities: [Usuario,Medico,Paciente,Consulta],
         synchronize: false, // Sincronize automaticamente as entidades com o banco de dados
+        dropSchema: false,
       });
 
       await dataSource.initialize();
