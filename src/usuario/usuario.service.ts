@@ -51,7 +51,7 @@ export class UsuarioService {
     } else if (tipo === 'paciente') {
       const pacienteData = createUsuarioDto as CreatePacienteDto;
       const paciente = this.pacienteRepository.create({    
-        contato: pacienteData.contato, 
+        nome: pacienteData.nome, 
       });
 
 

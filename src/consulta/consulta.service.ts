@@ -10,12 +10,15 @@ export class ConsultaService {
     @Inject('CONSULTA_REPOSITORY')
     private consultaRepository: Repository<Consulta>,
   ) {}
-  create(createConsultaDto: CreateConsultaDto) {
-    return 'This action adds a new consulta';
+  
+  create(createConsultaDto: CreateConsultaDto): Promise<Consulta> {
+    const consulta = this.consultaRepository.create(createConsultaDto);
+    return this.consultaRepository.save(consulta);
   }
 
-  findAll() {
-    return `This action returns all consulta`;
+
+  findAll(): Promise<Consulta[]> {
+    return this.consultaRepository.find();
   }
 
   findOne(id: number) {

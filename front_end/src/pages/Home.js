@@ -1,8 +1,10 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Sidebar from '../components/sidebar/Sidebar';
 import Header from '../components/header/Header';
-import './Home.css' 
 
+
+import './Home.css';
 
 const Home = () => {
   return (
@@ -11,8 +13,9 @@ const Home = () => {
       <div className="main-content">
         <Header />
         <div className="content">
-          <h1>Welcome to the Home Page</h1>
-          {/* Conteúdo principal da página */}
+          <Routes>
+            <Route path="/" element={<h1>Bem vindo a pagina principal</h1>} />
+          </Routes>
         </div>
       </div>
     </div>

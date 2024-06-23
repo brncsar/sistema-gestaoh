@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -16,8 +17,8 @@ const Sidebar = () => {
             <span className="icon">🔵</span> Perfil
           </a>
           <ul className={`submenu ${openMenu === 'perfil' ? 'open' : ''}`}>
-            <li><a href="/profile/edit-photo">Alterar foto</a></li>
-            <li><a href="/profile/edit-data">Alterar dados</a></li>
+            <li><Link to="/profile/edit-photo">Alterar foto</Link></li>
+            <li><Link to="/profile/edit-data">Alterar dados</Link></li>
           </ul>
         </li>
         <li>
@@ -25,8 +26,8 @@ const Sidebar = () => {
             <span className="icon">🔵</span> Pacientes
           </a>
           <ul className={`submenu ${openMenu === 'pacientes' ? 'open' : ''}`}>
-            <li><a href="/patients/consult">Consultar pacientes</a></li>
-            <li><a href="/patients/add">Adicionar paciente</a></li>
+            <li><Link to="/patients/consult">Consultar pacientes</Link></li>
+            <li><Link to="/patients/add">Adicionar paciente</Link></li>
           </ul>
         </li>
         <li>
@@ -34,8 +35,8 @@ const Sidebar = () => {
             <span className="icon">🔵</span> Consultas
           </a>
           <ul className={`submenu ${openMenu === 'consultas' ? 'open' : ''}`}>
-            <li><a href="/appointments/add">Adicionar consulta</a></li>
-            <li><a href="/appointments/view">Ver consultas</a></li>
+            <li><Link to="/appointments/add">Adicionar consulta</Link></li>
+            <li><Link to="/appointments/view">Ver consultas</Link></li>
           </ul>
         </li>
         <li>
@@ -43,11 +44,11 @@ const Sidebar = () => {
             <span className="icon">🔵</span> Exames
           </a>
           <ul className={`submenu ${openMenu === 'exames' ? 'open' : ''}`}>
-            <li><a href="/exams/add">Adicionar exame</a></li>
-            <li><a href="/exams/view">Ver exames</a></li>
+            <li><Link to="/exams/add">Adicionar exame</Link></li>
+            <li><Link to="/exams/view">Ver exames</Link></li>
           </ul>
         </li>
-        <li><a href="/calendar"><span className="icon">🔵</span> Calendário</a></li>
+        <li><Link to="/calendar"><span className="icon">🔵</span> Calendário</Link></li>
       </ul>
     </div>
   );

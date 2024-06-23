@@ -15,10 +15,10 @@ export class Paciente {
 
   @Column({ length: 100 })
   @ApiProperty({
-    description: 'Especialidade do médico',
-    example: 'Cardiologia',
+    description: 'Nome Paciente',
+    example: 'Carlos',
   })
-  contato: string;
+  nome: string;
 
   
 

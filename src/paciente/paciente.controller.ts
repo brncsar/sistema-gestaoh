@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { PacienteService } from './paciente.service';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
 import { UpdatePacienteDto } from './dto/update-paciente.dto';
+import { Paciente } from './entities/paciente.entity';
 
 @Controller('paciente')
 export class PacienteController {
@@ -13,7 +14,10 @@ export class PacienteController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('nome') nome: string): Promise<Paciente[]> {
+    if (nome) {
+       this.pacienteService.findByName(nome);
+    }
     return this.pacienteService.findAll();
   }
 

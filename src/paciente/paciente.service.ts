@@ -22,6 +22,15 @@ export class PacienteService {
     return this.pacienteRepository.find();
   }
 
+  findByName(nome: string): Promise<Paciente[]> {
+    return this.pacienteRepository.find({
+      where: {
+        nome: nome,
+      },
+    });
+  }
+
+
   findOne(id: number): Promise<Paciente> {
     return this.pacienteRepository.findOne({ where: { id } });
   }
