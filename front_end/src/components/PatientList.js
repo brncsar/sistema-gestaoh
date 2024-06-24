@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../styles/patientList.css';
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
@@ -37,26 +38,26 @@ const PatientList = () => {
     event.preventDefault();
     filterPatients(search);
   };
-
   return (
-    <div>
-      <h2>Patients List</h2>
+    <div className="patient-list">
+      <h2>Lista de Pacientes</h2>
       <form onSubmit={handleSearchSubmit}>
         <input
           type="text"
-          placeholder="Search by name"
+          placeholder="Procure pelo nome"
           value={search}
           onChange={handleSearchChange}
         />
-        <button type="submit">Search</button>
+        <button type="submit" className="search-button">Buscar</button>
+        <button className="add-button">Add Paciente</button>
       </form>
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Contact</th>
-            <th>Actions</th>
+            <th>Nome</th>
+            <th>Contacto</th>
+            <th>Açoes</th>
           </tr>
         </thead>
         <tbody>
@@ -65,9 +66,9 @@ const PatientList = () => {
               <td>{patient.id}</td>
               <td>{patient.nome}</td>
               <td>{patient.contato}</td>
-              <td>
-                <button>Edit</button>
-                <button>Delete</button>
+              <td className="action-buttons">
+                <button className="edit-button">Editar</button>
+                <button className="delete-button">Deletar</button>
               </td>
             </tr>
           ))}

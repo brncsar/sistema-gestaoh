@@ -1,9 +1,16 @@
 .home-container {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
+  background-image: url('/public/backg.jpg'); /* Caminho relativo a partir da pasta public */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   }
   
   .main-content {
+    background-color: rgba(75, 92, 83, 0.76); /* Para dar um fundo semi-transparente ao conteúdo principal */
+    padding: 20px;
+    border-radius: 10px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -11,6 +18,11 @@
   
   .content {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
+    margin-top: -900px;
+    color: rgb(255, 255, 255); /* Ajustar a cor do texto para que fique visível */
   }
   

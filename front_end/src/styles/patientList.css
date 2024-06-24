@@ -1,0 +1,104 @@
+.patient-list {
+  width: 90%;
+  max-width: 1200px;
+  margin: 300px auto;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.patient-list h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.patient-list form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.patient-list input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.patient-list button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.patient-list .add-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.patient-list .search-button {
+  background-color: #007bff;
+  color: white;
+  margin-right: 10px;
+}
+
+.patient-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.patient-list table th, .patient-list table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.patient-list table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.patient-list table td {
+  background-color: #fff;
+  color: #333;
+}
+
+.patient-list .edit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.patient-list .edit-button:hover {
+  background-color: #0056b3;
+}
+
+.patient-list .delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.patient-list .delete-button:hover {
+  background-color: #c82333;
+}
+
+.patient-list .action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}

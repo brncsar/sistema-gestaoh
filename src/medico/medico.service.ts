@@ -22,6 +22,14 @@ export class MedicoService {
     return this.medicoRepository.find();
   }
 
+  findByName(nome: string): Promise<Medico[]> {
+    return this.medicoRepository.find({
+      where: {
+        nome: nome,
+      },
+    });
+  }
+
   findOne(id: number): Promise<Medico> {
     return this.medicoRepository.findOne({ where: { id } });
   }

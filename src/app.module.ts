@@ -12,6 +12,8 @@ import { Usuario } from './usuario/entities/usuario.entity';
 import { Medico } from './medico/entities/medico.entity';
 import { Paciente } from './paciente/entities/paciente.entity';
 import { Consulta } from './consulta/entities/consulta.entity';
+import { ExameModule } from './exame/exame.module';
+import { Exame } from './exame/entities/exame.entity';
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { Consulta } from './consulta/entities/consulta.entity';
       username: 'root',
       password: 'Bancoinit1411',
       database: 'gestaosaudedb',
-      entities: [Usuario, Medico, Paciente, Consulta],
+      entities: [Usuario, Medico, Paciente, Consulta,Exame],
       synchronize: false,
       dropSchema: false,
     }),
@@ -31,6 +33,7 @@ import { Consulta } from './consulta/entities/consulta.entity';
     MedicoModule,
     PacienteModule,
     ConsultaModule,
+    ExameModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtService],

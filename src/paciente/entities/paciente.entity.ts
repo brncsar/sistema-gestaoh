@@ -2,6 +2,7 @@ import { Entity, Column, OneToMany, OneToOne, JoinColumn, PrimaryGeneratedColumn
 import { ApiProperty } from '@nestjs/swagger';
 import { Usuario } from 'src/usuario/entities/usuario.entity'
 import { Consulta } from 'src/consulta/entities/consulta.entity';
+import { Exame } from 'src/exame/entities/exame.entity';
 
 @Entity()
 export class Paciente {
@@ -24,6 +25,9 @@ export class Paciente {
 
   @OneToMany(() => Consulta, (consulta) => consulta.paciente)
   consultas: Consulta[];
+  
+  @OneToMany(() => Exame, (exame) => exame.paciente)
+  exames: Exame[];
 
   @OneToOne(() => Usuario, (usuario) => usuario.paciente)
   @JoinColumn()

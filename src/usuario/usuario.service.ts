@@ -40,6 +40,7 @@ export class UsuarioService {
       
 
       const medico = this.medicoRepository.create({ 
+        nome: medicoData.nome,
         especialidade: medicoData.especialidade,
         crm: medicoData.crm
       });
@@ -69,9 +70,48 @@ export class UsuarioService {
     return this.usuarioRepository.find();
   }
 
-  async findOne(id: number): Promise<Usuario> {
-    return this.usuarioRepository.findOne({ where: { id } });
+  async findOne(id: number): Promise<any> {
+    // Primeiro, tenta encontrar o paciente
+    const paciente = await this.pacienteRepository.findOne({ where: { id } });
+    if (paciente) {
+      return {
+        id: paciente.id,
+        nome: paciente.nome,
+      };
+    }
+
+    // Se não encontrou, tenta encontrar o médico
+    const medico = await this.medicoRepository.findOne({ where: { id } });
+    if (medico) {
+      return {
+        id: medico.id,
+        nome: medico.nome,
+      };
+    }
+
+    // Se não encontrou nenhum dos dois, retorna o usuário básico
+    const usuario = await this.usuarioRepository.findOne({ where: { id } });
+    if (usuario) {
+      return {
+        id: usuario.id,
+        nome: 'Usuário', // Nome genérico se não for um paciente ou médico
+        usuario: usuario.usuario,
+        email: usuario.email,
+      };
+    }
+
+    return null;
   }
+
+
+
+  // async findOne(id: number): Promise<Usuario> {
+  //   return this.usuarioRepository.findOne({
+  //     where: { id },
+  //     relations: ['paciente', 'medico'],
+  //   });
+  // }
+
 
   async findByUsuario(usuario: string): Promise<Usuario> {
     return this.usuarioRepository.findOne({ where: { usuario } });

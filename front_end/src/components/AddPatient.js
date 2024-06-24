@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/add.css'
 
 const AddPatient = () => {
   const [nome, setNome] = useState('');
@@ -21,8 +22,8 @@ const AddPatient = () => {
   };
 
   return (
-    <div>
-      <h2>Adicionar Paciente</h2>
+    <div className="add">
+      <h2>Adicionar Usuário</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Nome</label>
@@ -33,7 +34,8 @@ const AddPatient = () => {
             required 
           />
         </div>
-        <button type="submit">Adicionar Paciente</button>
+
+        <button type="submit" className="add-button">Adicionar Usuário</button>
       </form>
     </div>
   );

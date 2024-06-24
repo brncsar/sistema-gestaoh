@@ -1,73 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../styles/patientList.css'; // Reutilizando o mesmo CSS
 
 const ConsultList = () => {
-  const [patients, setPatients] = useState([]);
-  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [consults, setConsults] = useState([]);
+  const [filteredConsults, setFilteredConsults] = useState([]);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetchPatients();
+    fetchConsults();
   }, []);
 
-  const fetchPatients = async () => {
+  const fetchConsults = async () => {
     try {
       const response = await axios.get('http://localhost:3000/consulta');
-      setPatients(response.data);
-      setFilteredPatients(response.data); // Inicialmente mostrar todos os consultas
+      setConsults(response.data);
+      setFilteredConsults(response.data); // Inicialmente mostrar todas as consultas
     } catch (error) {
-      console.error('Error fetching patients', error);
+      console.error('Error fetching consults', error);
     }
   };
 
   const handleSearchChange = (event) => {
     const searchValue = event.target.value;
     setSearch(searchValue);
-    filterPatients(searchValue);
+    filterConsults(searchValue);
   };
 
-  const filterPatients = (searchValue) => {
-    const filtered = patients.filter((patient) =>
-      patient.nome.toLowerCase().includes(searchValue.toLowerCase())
+  const filterConsults = (searchValue) => {
+    const filtered = consults.filter((consult) =>
+      consult.nome.toLowerCase().includes(searchValue.toLowerCase())
     );
-    setFilteredPatients(filtered);
+    setFilteredConsults(filtered);
   };
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    filterPatients(search);
+    filterConsults(search);
   };
 
   return (
-    <div>
-      <h2>Patients List</h2>
+    <div className="patient-list"> {/* Reutilizando a classe CSS */}
+      <h2>Lista de Consultas</h2>
       <form onSubmit={handleSearchSubmit}>
         <input
           type="text"
-          placeholder="Search by name"
+          placeholder="Procure pelo nome"
           value={search}
           onChange={handleSearchChange}
         />
-        <button type="submit">Search</button>
+        <button type="submit" className="search-button">Buscar</button>
+        <button className="add-button">Add Consulta</button>
       </form>
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Contact</th>
-            <th>Actions</th>
+            <th>Nome</th>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          {filteredPatients.map((patient) => (
-            <tr key={patient.id}>
-              <td>{patient.id}</td>
-              <td>{patient.nome}</td>
-              <td>{patient.contato}</td>
-              <td>
-                <button>Edit</button>
-                <button>Delete</button>
+          {filteredConsults.map((consult) => (
+            <tr key={consult.id}>
+              <td>{consult.id}</td>
+              <td>{consult.nome}</td>
+              <td>{consult.data}</td>
+              <td>{consult.hora}</td>
+              <td className="action-buttons">
+                <button className="edit-button">Editar</button>
+                <button className="delete-button">Deletar</button>
               </td>
             </tr>
           ))}
