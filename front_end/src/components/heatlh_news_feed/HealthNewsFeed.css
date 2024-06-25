@@ -1,0 +1,49 @@
+.health-news-feed {
+  padding: 20px;
+  background-color: #b5bbc25b;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.health-news-feed h2 {
+  margin-bottom: 20px; 
+  color: #4d4d4d;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.health-news-feed ul {
+  list-style: none;
+  padding: 0;
+}
+
+.health-news-feed li {
+  background-color: #0aebf331;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.health-news-feed li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.315);
+}
+
+.health-news-feed a {
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+}
+
+.health-news-feed a:hover {
+  text-decoration: underline;
+}
+
+.health-news-feed p {
+  margin: 5px 0 0;
+  color: #555; /* Ajuste a cor do texto para melhor contraste */
+}

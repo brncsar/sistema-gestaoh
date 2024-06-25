@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateConsultaDto } from './dto/create-consulta.dto';
 import { UpdateConsultaDto } from './dto/update-consulta.dto';
 import { Consulta } from './entities/consulta.entity';
@@ -17,19 +17,25 @@ export class ConsultaService {
   }
 
 
-  findAll(): Promise<Consulta[]> {
-    return this.consultaRepository.find();
+  async findAll(): Promise<Consulta[]> {
+    return this.consultaRepository.find({ relations: ['paciente', 'medico'] });
   }
 
   findOne(id: number) {
     return `This action returns a #${id} consulta`;
   }
 
-  update(id: number, updateConsultaDto: UpdateConsultaDto) {
-    return `This action updates a #${id} consulta`;
+
+  async update(id: number, updateConsultaDto: UpdateConsultaDto): Promise<Consulta> {
+    const consulta = await this.consultaRepository.findOne({ where: { id } });
+    if (!consulta) {
+      throw new NotFoundException(`Consulta com ID ${id} não encontrada`);
+    }
+    Object.assign(consulta, updateConsultaDto);
+    return this.consultaRepository.save(consulta);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} consulta`;
+  async remove(id: number): Promise<void> {
+    await this.consultaRepository.delete(id);
   }
 }

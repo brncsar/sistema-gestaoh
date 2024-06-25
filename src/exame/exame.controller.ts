@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { ExameService } from './exame.service';
 import { CreateExameDto } from './dto/create-exame.dto';
 import { UpdateExameDto } from './dto/update-exame.dto';
@@ -28,7 +28,12 @@ export class ExameController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.exameService.remove(+id);
+  async remove(@Param('id') id: string) {
+    try {
+      await this.exameService.remove(+id);
+      return { message: 'Consulta excluída com sucesso' };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

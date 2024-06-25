@@ -63,7 +63,7 @@ export class UsuarioService {
       throw new Error('Tipo de usuário inválido');
     }
 
-    return {statusCode: HttpStatus.OK, message: 'Arvores encontradas.'};
+    return {statusCode: HttpStatus.OK, message: 'Usuario Criado.'};
   }
 
   async findAll(): Promise<Usuario[]> {
@@ -119,9 +119,8 @@ export class UsuarioService {
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto): Promise<Usuario> {
     await this.usuarioRepository.update(id, updateUsuarioDto);
-    return this.findOne(id);
+    return this.usuarioRepository.findOne({ where: { id } });
   }
-
   async remove(id: number): Promise<void> {
     await this.usuarioRepository.delete(id);
   }

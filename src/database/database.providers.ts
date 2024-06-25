@@ -4,6 +4,7 @@ import { Medico } from 'src/medico/entities/medico.entity';
 import { Paciente } from 'src/paciente/entities/paciente.entity';
 import { Consulta } from 'src/consulta/entities/consulta.entity';
 import { Exame } from 'src/exame/entities/exame.entity';
+import { truncate } from 'fs';
 
 export const databaseProviders = [
   {
@@ -17,7 +18,7 @@ export const databaseProviders = [
         password: 'Bancoinit1411',
         database: 'gestaosaudedb',
         entities: [Usuario,Medico,Paciente,Consulta,Exame],
-        synchronize: false, // Sincronize automaticamente as entidades com o banco de dados
+        synchronize: false,
         dropSchema: false,
       });
 

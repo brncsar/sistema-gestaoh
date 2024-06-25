@@ -21,6 +21,27 @@ export class Paciente {
   })
   nome: string;
 
+  @Column({ default: 'não especificado' })
+  @ApiProperty({
+    description: 'Gênero do paciente',
+    example: 'Masculino',
+  })
+  genero: string;
+
+  @Column({ default: '000000' })
+  @ApiProperty({
+    description: 'Contato do paciente',
+    example: '3199999999',
+  })
+  contato: number;
+
+  @Column({ default: true })
+  @ApiProperty({
+    description: 'Indicador se é cliente',
+    example: true,
+  })
+  cliente: boolean;
+
   
 
   @OneToMany(() => Consulta, (consulta) => consulta.paciente)
@@ -30,11 +51,6 @@ export class Paciente {
   exames: Exame[];
 
   @OneToOne(() => Usuario, (usuario) => usuario.paciente)
-  @JoinColumn()
+  @JoinColumn({ name: 'id' })
   idusuario: Usuario;
 }
-
-
-
-  // Adicione outros campos e relacionamentos específicos do Paciente
-

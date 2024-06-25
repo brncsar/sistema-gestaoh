@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../styles/add.css'; // Reutilizando o CSS existente
+import '../styles/add.css'; // Importando o CSS compartilhado
 
 const AddConsult = () => {
-  const [nome, setNome] = useState('');
+  const [pacienteId, setPacienteId] = useState('');
+  const [medicoId, setMedicoId] = useState('');
   const [data, setData] = useState('');
   const [hora, setHora] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const consultData = {
+      pacienteId: parseInt(pacienteId),
+      medicoId: parseInt(medicoId),
+      data,
+      hora_consulta: hora,
+    };
+
     try {
-      const response = await axios.post('http://localhost:3000/consulta', {
-        nome,
-        data,
-        hora,
-      });
-      if (response.status === 201 || response.status === 200) {
-        alert('Consulta adicionada com sucesso');
-        setNome('');
-        setData('');
-        setHora('');
-      }
+      await axios.post('http://localhost:3000/consulta', consultData);
+      alert('Consulta adicionada com sucesso!');
     } catch (error) {
       console.error('Erro ao adicionar consulta', error);
       alert('Erro ao adicionar consulta');
@@ -28,37 +27,50 @@ const AddConsult = () => {
   };
 
   return (
-    <div className="add">
+    <div className="add-container">
       <h2>Adicionar Consulta</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nome</label>
-          <input 
-            type="text" 
-            value={nome} 
-            onChange={(e) => setNome(e.target.value)} 
-            required 
+        <div className="form-group">
+          <label htmlFor="pacienteId">ID do Paciente</label>
+          <input
+            type="number"
+            id="pacienteId"
+            value={pacienteId}
+            onChange={(e) => setPacienteId(e.target.value)}
+            required
           />
         </div>
-        <div>
-          <label>Data</label>
-          <input 
-            type="date" 
-            value={data} 
-            onChange={(e) => setData(e.target.value)} 
-            required 
+        <div className="form-group">
+          <label htmlFor="medicoId">ID do Médico</label>
+          <input
+            type="number"
+            id="medicoId"
+            value={medicoId}
+            onChange={(e) => setMedicoId(e.target.value)}
+            required
           />
         </div>
-        <div>
-          <label>Hora</label>
-          <input 
-            type="time" 
-            value={hora} 
-            onChange={(e) => setHora(e.target.value)} 
-            required 
+        <div className="form-group">
+          <label htmlFor="data">Data</label>
+          <input
+            type="date"
+            id="data"
+            value={data}
+            onChange={(e) => setData(e.target.value)}
+            required
           />
         </div>
-        <button type="submit" className="add-button">Adicionar Consulta</button>
+        <div className="form-group">
+          <label htmlFor="hora">Hora</label>
+          <input
+            type="number"
+            id="hora"
+            value={hora}
+            onChange={(e) => setHora(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="submit-button">Adicionar Consulta</button>
       </form>
     </div>
   );

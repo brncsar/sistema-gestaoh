@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put } from '@nestjs/common';
 import { PacienteService } from './paciente.service';
 import { CreatePacienteDto } from './dto/create-paciente.dto';
 import { UpdatePacienteDto } from './dto/update-paciente.dto';
@@ -26,13 +26,14 @@ export class PacienteController {
     return this.pacienteService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePacienteDto: UpdatePacienteDto) {
-    return this.pacienteService.update(+id, updatePacienteDto);
+
+  @Put(':id')
+  async update(@Param('id') id: number, @Body() updatePacienteDto: UpdatePacienteDto) {
+    return this.pacienteService.update(id, updatePacienteDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.pacienteService.remove(+id);
+  async deletePaciente(@Param('id') id: number) {
+    return this.pacienteService.delete(id);
   }
 }

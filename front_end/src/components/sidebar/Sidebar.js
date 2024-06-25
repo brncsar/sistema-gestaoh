@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaUserAlt, FaStethoscope, FaNotesMedical, FaCalendarAlt } from 'react-icons/fa';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -14,7 +15,7 @@ const Sidebar = () => {
       <ul>
         <li>
           <a href="#!" onClick={() => toggleMenu('perfil')}>
-            <span className="icon">🔵</span> Perfil
+            <span className="icon"><FaUserAlt /></span> Perfil
           </a>
           <ul className={`submenu ${openMenu === 'perfil' ? 'open' : ''}`}>
             <li><Link to="/profile/edit-photo">Alterar foto</Link></li>
@@ -23,7 +24,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a href="#!" onClick={() => toggleMenu('pacientes')}>
-            <span className="icon">🔵</span> Pacientes
+          <span className="icon"><FaStethoscope /></span> Pacientes
           </a>
           <ul className={`submenu ${openMenu === 'pacientes' ? 'open' : ''}`}>
             <li><Link to="/patients/consult">Consultar pacientes</Link></li>
@@ -32,7 +33,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a href="#!" onClick={() => toggleMenu('consultas')}>
-            <span className="icon">🔵</span> Consultas
+          <span className="icon"><FaNotesMedical /></span> Consultas
           </a>
           <ul className={`submenu ${openMenu === 'consultas' ? 'open' : ''}`}>
             <li><Link to="/appointments/add">Adicionar consulta</Link></li>
@@ -41,14 +42,14 @@ const Sidebar = () => {
         </li>
         <li>
           <a href="#!" onClick={() => toggleMenu('exames')}>
-            <span className="icon">🔵</span> Exames
+          <span className="icon"><FaNotesMedical /></span> Exames
           </a>
           <ul className={`submenu ${openMenu === 'exames' ? 'open' : ''}`}>
             <li><Link to="/exams/add">Adicionar exame</Link></li>
             <li><Link to="/exams/view">Ver exames</Link></li>
           </ul>
         </li>
-        <li><Link to="/calendar"><span className="icon">🔵</span> Calendário</Link></li>
+        <li><Link to="/calendar"><span className="icon"><FaCalendarAlt /></span>Calendário</Link></li>
       </ul>
     </div>
   );

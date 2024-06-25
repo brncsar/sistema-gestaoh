@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/patientList.css'; // Reutilizando o mesmo CSS
+import EditConsult from '../pages/EditConsult';
+import '../styles/patientList.css';
 
 const ConsultList = () => {
   const [consults, setConsults] = useState([]);
   const [filteredConsults, setFilteredConsults] = useState([]);
   const [search, setSearch] = useState('');
+  const [editingConsultId, setEditingConsultId] = useState(null);
 
   useEffect(() => {
     fetchConsults();
@@ -15,7 +17,7 @@ const ConsultList = () => {
     try {
       const response = await axios.get('http://localhost:3000/consulta');
       setConsults(response.data);
-      setFilteredConsults(response.data); // Inicialmente mostrar todas as consultas
+      setFilteredConsults(response.data);
     } catch (error) {
       console.error('Error fetching consults', error);
     }
@@ -29,7 +31,7 @@ const ConsultList = () => {
 
   const filterConsults = (searchValue) => {
     const filtered = consults.filter((consult) =>
-      consult.nome.toLowerCase().includes(searchValue.toLowerCase())
+      consult.paciente.toLowerCase().includes(searchValue.toLowerCase())
     );
     setFilteredConsults(filtered);
   };
@@ -39,44 +41,78 @@ const ConsultList = () => {
     filterConsults(search);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/consulta/${id}`);
+      const updatedConsults = consults.filter((consult) => consult.id !== id);
+      setConsults(updatedConsults);
+      setFilteredConsults(updatedConsults);
+    } catch (error) {
+      console.error('Error deleting consult', error);
+    }
+  };
+
+  const handleEdit = (id) => {
+    setEditingConsultId(id);
+  };
+
+  const handleCloseEdit = () => {
+    setEditingConsultId(null);
+    fetchConsults();
+  };
+
   return (
-    <div className="patient-list"> {/* Reutilizando a classe CSS */}
+    <div className="consult-list">
       <h2>Lista de Consultas</h2>
       <form onSubmit={handleSearchSubmit}>
         <input
           type="text"
-          placeholder="Procure pelo nome"
+          placeholder="Procure pelo nome do paciente"
           value={search}
           onChange={handleSearchChange}
         />
         <button type="submit" className="search-button">Buscar</button>
-        <button className="add-button">Add Consulta</button>
+        <button type="button" className="add-button">Add Consulta</button>
       </form>
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nome</th>
+            <th>Nome do Paciente</th>
+            <th>Nome do Médico</th>
             <th>Data</th>
             <th>Hora</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          {filteredConsults.map((consult) => (
-            <tr key={consult.id}>
-              <td>{consult.id}</td>
-              <td>{consult.nome}</td>
-              <td>{consult.data}</td>
-              <td>{consult.hora}</td>
-              <td className="action-buttons">
-                <button className="edit-button">Editar</button>
-                <button className="delete-button">Deletar</button>
-              </td>
+          {filteredConsults.length > 0 ? (
+            filteredConsults.map((consult) => (
+              <tr key={consult.id}>
+                <td>{consult.id}</td>
+                <td>{consult.paciente}</td>
+                <td>{consult.medico}</td>
+                <td>{consult.data}</td>
+                <td>{consult.hora_consulta}</td>
+                <td className="action-buttons">
+                  <button className="edit-button" onClick={() => handleEdit(consult.id)}>Editar</button>
+                  <button className="delete-button" onClick={() => handleDelete(consult.id)}>Deletar</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6">Nenhuma consulta encontrada</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
+      {editingConsultId && (
+        <EditConsult
+          userId={editingConsultId}
+          onClose={handleCloseEdit}
+        />
+      )}
     </div>
   );
 };

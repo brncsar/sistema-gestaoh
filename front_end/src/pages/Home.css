@@ -1,3 +1,10 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Para evitar rolagem no body */
+}
+
 .home-container {
   display: flex;
   height: 100vh;
@@ -5,24 +12,89 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  }
+}
+
+.sidebar {
+  width: 250px; /* Largura da sidebar */
+  background-color: #2c3e50; /* Cor de fundo da sidebar */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* Organiza o conteúdo em coluna */
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
+  overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: rgba(37, 37, 37, 0.863);
+  padding: 25px;
+  border-radius: 0px;
+  width: 100%;
+  max-width: 1600px;
+  margin-bottom: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   
-  .main-content {
-    background-color: rgba(75, 92, 83, 0.76); /* Para dar um fundo semi-transparente ao conteúdo principal */
-    padding: 20px;
-    border-radius: 10px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    margin-top: -900px;
-    color: rgb(255, 255, 255); /* Ajustar a cor do texto para que fique visível */
-  }
-  
+}
+
+
+
+.health-news-feed {
+  width: 100%;
+  padding: 100px;
+  background-color: #faf8f83f;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; 
+  max-height: 60vh; 
+}
+
+.health-news-feed h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center; 
+}
+
+.health-news-feed ul {
+  list-style: none;
+  padding: 0;
+}
+
+.health-news-feed li {
+  background-color: #ffffff8a;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.health-news-feed li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.health-news-feed a {
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+}
+
+.health-news-feed a:hover {
+  text-decoration: underline;
+}
+
+.health-news-feed p {
+  margin: 5px 0 0;
+  color: #555;
+}

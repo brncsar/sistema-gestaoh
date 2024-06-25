@@ -16,8 +16,8 @@ export class ExameService {
     return this.exameRepository.save(exame);
   }
 
-  findAll() {
-    return `This action returns all exame`;
+  async findAll(): Promise<Exame[]> {
+    return this.exameRepository.find({ relations: ['paciente', 'medico'] });
   }
 
   findOne(id: number) {
@@ -28,7 +28,7 @@ export class ExameService {
     return `This action updates a #${id} exame`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} exame`;
+  async remove(id: number): Promise<void> {
+    await this.exameRepository.delete(id);
   }
 }

@@ -9,8 +9,8 @@ export class MedicoController {
   constructor(private readonly medicoService: MedicoService) {}
 
   @Post()
-  create(@Body() createMedicoDto: CreateMedicoDto) {
-    return this.medicoService.create(createMedicoDto);
+  create(@Body() createPacienteDto: CreateMedicoDto) {
+    return this.medicoService.create(createPacienteDto);
   }
 
   @Get()

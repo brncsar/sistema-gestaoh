@@ -102,3 +102,113 @@
   justify-content: space-between;
   gap: 10px;
 }
+
+
+
+
+
+
+.consult-list {
+  width: 90%;
+  max-width: 1200px;
+  margin: 300px auto;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.consult-list h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.consult-list form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.consult-list input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.consult-list button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.consult-list .add-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.consult-list .search-button {
+  background-color: #007bff;
+  color: white;
+  margin-right: 10px;
+}
+
+.consult-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.consult-list table th, .consult-list table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.consult-list table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.consult-list table td {
+  background-color: #fff;
+  color: #333;
+}
+
+.consult-list .edit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.consult-list .edit-button:hover {
+  background-color: #0056b3;
+}
+
+.consult-list .delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.consult-list .delete-button:hover {
+  background-color: #c82333;
+}
+
+.consult-list .action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}

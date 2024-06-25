@@ -5,6 +5,7 @@ import { UpdateMedicoDto } from './dto/update-medico.dto';
 import { Medico } from './entities/medico.entity';
 import { Repository } from 'typeorm';
 
+
 @Injectable()
 export class MedicoService {
 
@@ -13,10 +14,11 @@ export class MedicoService {
     private readonly medicoRepository: Repository<Medico>,
   ) {}
 
-  create(createMedicoDto: CreateMedicoDto): Promise<Medico> {
+  async create(createMedicoDto: CreateMedicoDto): Promise<Medico> {
     const medico = this.medicoRepository.create(createMedicoDto);
     return this.medicoRepository.save(medico);
   }
+  
 
   findAll(): Promise<Medico[]> {
     return this.medicoRepository.find();
@@ -39,7 +41,7 @@ export class MedicoService {
   }
 
 
-  remove(id: number) {
-    return `This action removes a #${id} medico`;
+  async remove(id: number): Promise<void> {
+    await this.medicoRepository.delete(id);
   }
 }
