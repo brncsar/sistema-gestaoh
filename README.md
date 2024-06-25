@@ -22,9 +22,12 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Descrição
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+Documentação Final : (https://1drv.ms/w/c/24d4b8b5adf80aed/EYunXWdOxAVNlvbW_nA2YecB51zeLbCz19MLvW4RQr-NHg?e=47abFH)
+Vídeo A3 : https://drive.google.com/file/d/1kKM9JDM2DKoY1ndo4qGlGwqjbc6diRr2/view?usp=sharing
 
 ## Installation
 
