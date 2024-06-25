@@ -3,40 +3,32 @@ import axios from 'axios';
 import '../styles/add.css'; // Importando o CSS compartilhado
 
 const AddPatient = () => {
+  const [usuario, setUsuario] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   const [nome, setNome] = useState('');
   const [genero, setGenero] = useState('');
   const [contato, setContato] = useState('');
   const [cliente, setCliente] = useState(false);
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     // Dados do usuário
     const usuarioData = {
-      nome,
+      usuario,
       email,
       senha,
-      tipo: 'paciente'
+      tipo: 'paciente',
+      data_criacao: new Date().toISOString(),
+      nome,
+      genero,
+      cliente,
+      contato: parseInt(contato),
     };
 
     try {
-      // Primeira requisição para criar o usuário
-      const response = await axios.post('http://localhost:3000/usuario/create', usuarioData);
-      const userId = response.data.userId;
-
-      // Dados do paciente
-      const pacienteData = {
-        nome,
-        genero,
-        contato: parseInt(contato),
-        cliente,
-        idusuarioId: userId // Adiciona o ID do usuário recém-criado
-      };
-
-      // Segunda requisição para criar o paciente
-      await axios.post('http://localhost:3000/paciente', pacienteData);
+     await axios.post('http://localhost:3000/usuario/create', usuarioData);
       alert('Paciente adicionado com sucesso!');
     } catch (error) {
       console.error('Erro ao adicionar paciente', error);
@@ -49,12 +41,12 @@ const AddPatient = () => {
       <h2>Adicionar Paciente</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="nome">Nome</label>
+          <label htmlFor="usuario">Usuário</label>
           <input
             type="text"
-            id="nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
+            id="usuario"
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
             required
           />
         </div>
@@ -75,6 +67,16 @@ const AddPatient = () => {
             id="senha"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="nome">Nome</label>
+          <input
+            type="text"
+            id="nome"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
             required
           />
         </div>
