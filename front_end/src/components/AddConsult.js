@@ -61,10 +61,10 @@ const AddConsult = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="hora">Hora</label>
+          <label htmlFor="hora_consulta">Hora</label>
           <input
             type="number"
-            id="hora"
+            id="hora_consulta"
             value={hora}
             onChange={(e) => setHora(e.target.value)}
             required

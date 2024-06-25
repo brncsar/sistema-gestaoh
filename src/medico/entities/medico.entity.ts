@@ -50,6 +50,11 @@ export class Medico {
   @OneToOne(() => Usuario, (usuario) => usuario.medico)
   @JoinColumn({name: 'idusuarioId'})
   idusuario: Usuario;
+
+  @Column()
+  idusuarioId: number;
+
+
 }
 
   // Adicione outros campos e relacionamentos específicos do Médico

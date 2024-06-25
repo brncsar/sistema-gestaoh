@@ -1,3 +1,14 @@
+body {
+  background-image: url('/public/h.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+}
+
 .register-container {
   max-width: 500px;
   margin: 0 auto;
@@ -6,6 +17,8 @@
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  height: 90vh;
+  
 }
 
 .register-form {

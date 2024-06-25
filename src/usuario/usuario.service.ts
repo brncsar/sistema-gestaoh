@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
 import { Repository } from 'typeorm';
@@ -21,97 +21,68 @@ export class UsuarioService {
     private pacienteRepository: Repository<Paciente>,
   ) {}
 
-  async create(createUsuarioDto: CreateUsuarioDto){
+  async create(createUsuarioDto: CreateUsuarioDto) {
     const { tipo, senha, ...usuarioData } = createUsuarioDto;
 
-    // Hashing da senha antes de criar o usuário
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(senha, salt);
+    try {
+      // Hashing da senha antes de criar o usuário
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(senha, salt);
 
-   
-    const novoUsuario = this.usuarioRepository.create({
-      ...usuarioData,
-      senha: hashedPassword
-    });
-    await this.usuarioRepository.save(novoUsuario);
-
-    if (tipo === 'medico') {
-      const medicoData = createUsuarioDto as CreateMedicoDto;
-      
-
-      const medico = this.medicoRepository.create({ 
-        nome: medicoData.nome,
-        especialidade: medicoData.especialidade,
-        crm: medicoData.crm
+      const novoUsuario = this.usuarioRepository.create({
+        ...usuarioData,
+        senha: hashedPassword,
       });
+      await this.usuarioRepository.save(novoUsuario);
 
+      if (tipo === 'medico') {
+        const medicoData = createUsuarioDto as CreateMedicoDto;
+        const medico = this.medicoRepository.create({
+          nome: medicoData.nome,
+          especialidade: medicoData.especialidade,
+          crm: medicoData.crm,
+          idusuarioId: novoUsuario.id, // Adiciona o ID do usuário recém-criado
+        });
+        await this.medicoRepository.save(medico);
 
-      await this.medicoRepository.save(medico);
-      
+      } else if (tipo === 'paciente') {
+        const pacienteData = createUsuarioDto as CreatePacienteDto;
+        const paciente = this.pacienteRepository.create({
+          nome: pacienteData.nome,
+          genero: pacienteData.genero,
+          contato: pacienteData.contato,
+          cliente: pacienteData.cliente,
+        });
+        const novoPaciente = await this.pacienteRepository.save(paciente);
 
-    } else if (tipo === 'paciente') {
-      const pacienteData = createUsuarioDto as CreatePacienteDto;
-      const paciente = this.pacienteRepository.create({    
-        nome: pacienteData.nome, 
-      });
+        // Atualiza o campo idusuarioId após a criação do paciente
+        await this.pacienteRepository.update(novoPaciente.id, { idusuarioId: novoUsuario.id });
 
+      } else {
+        throw new Error('Tipo de usuário inválido');
+      }
 
-      await this.pacienteRepository.save(paciente);
-      
-      
-    } else {
-      throw new Error('Tipo de usuário inválido');
+      return { userId: novoUsuario.id, statusCode: HttpStatus.OK, message: 'Usuario Criado.' };
+    } catch (error) {
+      console.error('Erro ao criar usuário', error);
+      throw new HttpException('Erro ao criar usuário', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    return {statusCode: HttpStatus.OK, message: 'Usuario Criado.'};
   }
 
   async findAll(): Promise<Usuario[]> {
     return this.usuarioRepository.find();
   }
 
-  async findOne(id: number): Promise<any> {
-    // Primeiro, tenta encontrar o paciente
-    const paciente = await this.pacienteRepository.findOne({ where: { id } });
-    if (paciente) {
-      return {
-        id: paciente.id,
-        nome: paciente.nome,
-      };
+  async findOne(id: number): Promise<Usuario> {
+    const usuario = await this.usuarioRepository.findOne({
+      where: { id },
+      relations: ['medico', 'paciente'], // Certifique-se de ajustar as relações conforme necessário
+    });
+    if (!usuario) {
+      throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
     }
-
-    // Se não encontrou, tenta encontrar o médico
-    const medico = await this.medicoRepository.findOne({ where: { id } });
-    if (medico) {
-      return {
-        id: medico.id,
-        nome: medico.nome,
-      };
-    }
-
-    // Se não encontrou nenhum dos dois, retorna o usuário básico
-    const usuario = await this.usuarioRepository.findOne({ where: { id } });
-    if (usuario) {
-      return {
-        id: usuario.id,
-        nome: 'Usuário', // Nome genérico se não for um paciente ou médico
-        usuario: usuario.usuario,
-        email: usuario.email,
-      };
-    }
-
-    return null;
+    return usuario;
   }
-
-
-
-  // async findOne(id: number): Promise<Usuario> {
-  //   return this.usuarioRepository.findOne({
-  //     where: { id },
-  //     relations: ['paciente', 'medico'],
-  //   });
-  // }
-
 
   async findByUsuario(usuario: string): Promise<Usuario> {
     return this.usuarioRepository.findOne({ where: { usuario } });
@@ -119,9 +90,17 @@ export class UsuarioService {
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto): Promise<Usuario> {
     await this.usuarioRepository.update(id, updateUsuarioDto);
-    return this.usuarioRepository.findOne({ where: { id } });
+    const updatedUsuario = await this.usuarioRepository.findOne({ where: { id } });
+    if (!updatedUsuario) {
+      throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
+    }
+    return updatedUsuario;
   }
+
   async remove(id: number): Promise<void> {
-    await this.usuarioRepository.delete(id);
+    const deleteResult = await this.usuarioRepository.delete(id);
+    if (!deleteResult.affected) {
+      throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND);
+    }
   }
 }

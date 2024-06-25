@@ -80,8 +80,8 @@ const ConsultList = () => {
             <th>ID</th>
             <th>Nome do Paciente</th>
             <th>Nome do Médico</th>
-            <th>Data</th>
-            <th>Hora</th>
+            <th>Data da Consulta</th>
+            <th>Hora da Consulta</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -93,7 +93,7 @@ const ConsultList = () => {
                 <td>{consult.paciente}</td>
                 <td>{consult.medico}</td>
                 <td>{consult.data}</td>
-                <td>{consult.hora_consulta}</td>
+                <td>{consult.hora}</td>
                 <td className="action-buttons">
                   <button className="edit-button" onClick={() => handleEdit(consult.id)}>Editar</button>
                   <button className="delete-button" onClick={() => handleDelete(consult.id)}>Deletar</button>

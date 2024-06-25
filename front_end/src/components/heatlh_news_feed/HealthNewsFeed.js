@@ -15,7 +15,7 @@ const HealthNewsFeed = () => {
         params: {
           category: 'health',
           country: 'br',
-          apiKey: 'ba0732c1c84c4925b9cc997875ba37ec' // Substitua pela sua chave da API
+          apiKey: '57965dd8a5844550a736095eadc2bc98' // Substitua pela sua chave da API
         }
       });
       setArticles(response.data.articles);

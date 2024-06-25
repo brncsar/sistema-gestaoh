@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateUsuarioDto } from 'src/usuario/dto/create-usuario.dto';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 export class CreateMedicoDto extends CreateUsuarioDto {
   @ApiProperty({ example: 'Nome do medico' })
@@ -10,5 +11,10 @@ export class CreateMedicoDto extends CreateUsuarioDto {
 
   @ApiProperty({ example: 'Cadastro Regional Medico' })
   crm: string;
+
+  @ApiProperty({ example: '1', required: false })
+  idusuarioId: number;
+
+
 
 }

@@ -51,6 +51,10 @@ export class Paciente {
   exames: Exame[];
 
   @OneToOne(() => Usuario, (usuario) => usuario.paciente)
-  @JoinColumn({ name: 'id' })
+  @JoinColumn({ name: 'idusuarioId' })
   idusuario: Usuario;
+
+  @Column({nullable: true})
+  idusuarioId: number;
+
 }

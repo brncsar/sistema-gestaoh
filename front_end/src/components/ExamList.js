@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import EditExam from '../pages/EditExam'; // Certifique-se de criar este componente
+import EditExam from '..//pages/EditExam';
 import '../styles/patientList.css'
 
 const ExamList = () => {
@@ -31,7 +31,7 @@ const ExamList = () => {
 
   const filterExams = (searchValue) => {
     const filtered = exams.filter((exam) =>
-      exam.paciente.toLowerCase().includes(searchValue.toLowerCase())
+      exam.paciente.nome.toLowerCase().includes(searchValue.toLowerCase())
     );
     setFilteredExams(filtered);
   };
@@ -62,7 +62,7 @@ const ExamList = () => {
   };
 
   return (
-    <div className="list-container">
+    <div className="exam-list">
       <h2>Lista de Exames</h2>
       <form onSubmit={handleSearchSubmit}>
         <input
@@ -72,7 +72,7 @@ const ExamList = () => {
           onChange={handleSearchChange}
         />
         <button type="submit" className="search-button">Buscar</button>
-        <button type="button" className="add-button">Add Exame</button>
+        <button type="button" className="add-button">Adicionar Exame</button>
       </form>
       <table>
         <thead>
@@ -82,6 +82,8 @@ const ExamList = () => {
             <th>Nome do Médico</th>
             <th>Data</th>
             <th>Hora</th>
+            <th>Endereço</th>
+            <th>Causa</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -94,6 +96,8 @@ const ExamList = () => {
                 <td>{exam.medico.nome}</td>
                 <td>{exam.data}</td>
                 <td>{exam.hora_exame}</td>
+                <td>{exam.endereco}</td>
+                <td>{exam.causa}</td>
                 <td className="action-buttons">
                   <button className="edit-button" onClick={() => handleEdit(exam.id)}>Editar</button>
                   <button className="delete-button" onClick={() => handleDelete(exam.id)}>Deletar</button>
@@ -102,7 +106,7 @@ const ExamList = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="6">Nenhum exame encontrado</td>
+              <td colSpan="8">Nenhum exame encontrado</td>
             </tr>
           )}
         </tbody>
@@ -111,13 +115,6 @@ const ExamList = () => {
         <EditExam
           userId={editingExamId}
           onClose={handleCloseEdit}
-          entity="exame"
-          fields={[
-            { name: 'paciente.nome', label: 'Nome do Paciente', type: 'text', required: true },
-            { name: 'medico.nome', label: 'Nome do Médico', type: 'text', required: true },
-            { name: 'data', label: 'Data', type: 'date', required: true },
-            { name: 'hora_exame', label: 'Hora', type: 'time', required: true },
-          ]}
         />
       )}
     </div>

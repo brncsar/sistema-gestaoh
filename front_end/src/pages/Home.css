@@ -8,7 +8,7 @@ body, html {
 .home-container {
   display: flex;
   height: 100vh;
-  background-image: url('/public/backg.jpg'); /* Caminho relativo a partir da pasta public */
+  background-image: url('/public/home.jpg'); /* Caminho relativo a partir da pasta public */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
